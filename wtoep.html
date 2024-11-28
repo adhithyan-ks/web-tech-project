@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Number Features</title>
+    
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f0f0;
+            text-align: center;
+            margin-top: 50px;
+        }
+        .container {
+            background-color: #ffffff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            display: inline-block;
+        }
+        input[type="number"] {
+            width: 200px;
+            padding: 10px;
+            font-size: 16px;
+            margin-bottom: 20px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+        .button {
+            display: inline-block;
+            margin: 10px;
+            padding: 10px 20px;
+            font-size: 16px;
+            border: none;
+            background-color: #007BFF;
+            color: white;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        .button:hover {
+            background-color: #0056b3;
+        }
+        .result {
+            margin-top: 20px;
+            font-size: 18px;
+            color: #333;
+        }
+    </style>
+
+    <script>
+        function validateInput() {
+        let num = document.getElementById("numberInput").value;
+        let parsedNum = parseInt(num);
+        
+        // Check if the input is a valid number
+        if (isNaN(parsedNum) || num.trim() === "") {
+            return { isValid: false, message: "Please enter a valid number." };
+        }
+        
+        // Check for negative numbers
+        if (parsedNum < 0) {
+            return { isValid: false, message: "Please enter a non-negative number." };
+        }
+
+        return { isValid: true, value: parsedNum };
+    }
+
+    function findFactorial() {
+        let validation = validateInput();
+        if (!validation.isValid) {
+            document.getElementById("result").innerHTML = validation.message;
+            return;
+        }
+        
+        let num = validation.value;
+        let factorial = 1;
+        for(let i = 1; i <= num; i++) {
+            factorial *= i;
+        }
+        document.getElementById("result").innerHTML = `Factorial of ${num} is ${factorial}`;
+    }
+
+    // Repeat similar validation for the other functions
+    function fibonacciSeries() {
+        let validation = validateInput();
+        if (!validation.isValid) {
+            document.getElementById("result").innerHTML = validation.message;
+            return;
+        }
+        
+        let num = validation.value;
+        let fib = [0, 1];
+        for(let i = 2; i <= num; i++) {
+            fib[i] = fib[i - 1] + fib[i - 2];
+        }
+        document.getElementById("result").innerHTML = `Fibonacci series: ${fib.join(', ')}`;
+    }
+
+    function isPrime() {
+        let validation = validateInput();
+        if (!validation.isValid) {
+            document.getElementById("result").innerHTML = validation.message;
+            return;
+        }
+        
+        let num = validation.value;
+        let isPrime = num > 1;
+        for(let i = 2; i <= Math.sqrt(num); i++) {
+            if(num % i === 0) {
+                isPrime = false;
+                break;
+            }
+        }
+        document.getElementById("result").innerHTML = num + (isPrime ? " is a prime number." : " is not a prime number.");
+    }
+
+    function reverseNumber() {
+        let validation = validateInput();
+        if (!validation.isValid) {
+            document.getElementById("result").innerHTML = validation.message;
+            return;
+        }
+        
+        let num = validation.value;
+        let reversedNum = num.toString().split('').reverse().join('');
+        document.getElementById("result").innerHTML = `Reverse of ${num} is ${reversedNum}`;
+    }
+
+    function sumOfDigits() {
+        let validation = validateInput();
+        if (!validation.isValid) {
+            document.getElementById("result").innerHTML = validation.message;
+            return;
+        }
+        
+        let num = validation.value;
+        let sum = num.toString().split('').reduce((acc, digit) => acc + parseInt(digit), 0);
+        document.getElementById("result").innerHTML = `Sum of digits of ${num} is ${sum}`;
+    }
+
+    function evenOrOdd() {
+        let validation = validateInput();
+        if (!validation.isValid) {
+            document.getElementById("result").innerHTML = validation.message;
+            return;
+        }
+        
+        let num = validation.value;
+        let result = (num % 2 === 0) ? "even" : "odd";
+        document.getElementById("result").innerHTML = `${num} is ${result}.`;
+    }
+
+    </script>
+
+</head>
+<body>
+
+    <div class="container">
+        <h1>Explore Number Features</h1>
+        <input type="number" id="numberInput" placeholder="Enter a number" />
+
+        <br>
+        <button class="button" onclick="findFactorial()">Factorial</button>
+        <button class="button" onclick="fibonacciSeries()">Fibonacci</button>
+        <button class="button" onclick="isPrime()">Check Prime</button>
+        <button class="button" onclick="reverseNumber()">Reverse</button>
+        <button class="button" onclick="sumOfDigits()">Sum of Digits</button>
+        <button class="button" onclick="evenOrOdd()">Even or Odd</button>
+
+        <div id="result" class="result"></div>
+    </div>
+
+</body>
+</html>
